@@ -1,30 +1,30 @@
 #include <Stepper.h>
 
-#define lowLimitPin 6
-#define highLimitPin 7
+#define lowLimitPin 7
+#define highLimitPin 8
 #define lowDirection 0
 #define highDirection 1
 #define stepsPerRevolution 400
 
-int motorPins[4] = {2,3,4,5};
-Stepper motor = Stepper(stepsPerRevolution, 2, 3, 4, 5);
+int motorPins[4] = {3,4,5,6};
+Stepper motor = Stepper(stepsPerRevolution, 3, 4, 5, 6);
 String command = "";
+char newChar = "";
 //
 char availableCommands[][3]= {"INI", "!GW", "?PW", "!CH", "?PG"};
 //
 void setup() {
   Serial.begin(9600);
-  Serial.setTimeout(10000);
   for (int i = 0; i < 4; i++){
     pinMode(motorPins[i], OUTPUT);
   }
   pinMode(lowLimitPin, INPUT);
   pinMode(highLimitPin, INPUT);
+  attachInterrupt(digitalPinToInterrupt(2), void (*userFunc)(void), int mode)
 }
 
 void loop() {
   Serial.println("enter command");
-  char newChar = "";
   command = "";
   while (true) {
     if (Serial.available()){
