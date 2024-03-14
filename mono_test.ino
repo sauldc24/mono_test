@@ -1,6 +1,5 @@
 #include <Stepper.h>
 
-
 #define lowLimitPin 6
 #define highLimitPin 7
 #define lowDirection 0
@@ -10,7 +9,9 @@
 int motorPins[4] = {2,3,4,5};
 Stepper motor = Stepper(stepsPerRevolution, 2, 3, 4, 5);
 String command = "";
-
+//
+char availableCommands[][3]= {"INI", "!GW", "?PW", "!CH", "?PG"};
+//
 void setup() {
   Serial.begin(9600);
   Serial.setTimeout(10000);
