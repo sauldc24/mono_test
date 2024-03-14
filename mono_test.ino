@@ -25,6 +25,7 @@ void setup() {
 void loop() {
   Serial.println("enter command");
   char newChar = "";
+  command = "";
   while (true) {
     if (Serial.available()){
       newChar = Serial.read();
@@ -46,19 +47,25 @@ void loop() {
   }
 }
 
+void deEnergizeCoils(){
+  for (int i = 0; i < 4; i++){
+    digitalWrite(motorPins[i], LOW);
+  }
+}
+
 void moveToLimit (bool direction){
   if (direction){
     while (digitalRead(highLimitPin)){
       motor.step(1);
       delay(1);
     }
-    Serial.println("limit sensor detected");
   }
   else {
     while (digitalRead(lowLimitPin)){
       motor.step(-1);
       delay(1);
     }
-    Serial.println("limit sensor detected");
   }
+  deEnergizeCoils();
+  Serial.println("limit sensor detected");
 }
